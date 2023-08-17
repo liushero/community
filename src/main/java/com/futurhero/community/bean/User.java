@@ -93,9 +93,7 @@ public class User {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
-    public void eat(){
 
-    }
     @Override
     public String toString() {
         return "User{" +
