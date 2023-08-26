@@ -12,10 +12,10 @@
     <select id="selectUserById" resultType="user">
         select <include refid="selectUser"></include>
         from user
-        where id=#{id}
+        where id = #{id}
     </select>
 
-    <insert id="insertUser" keyProperty="id" parameterType="user">
+    <insert id="insertUser" keyProperty="id">
         insert into user(<include refid="insertUser"></include>)
         values(#{username}, #{password}, #{salt}, #{email}, #{type}, #{status}, #{activationCode}, #{headerUrl}
         , #{createTime})
@@ -24,24 +24,24 @@
     <select id="selectUserByName" resultType="user">
         select <include refid="selectUser"></include>
         from user
-        where username=#{username}
+        where username = #{username}
     </select>
 
     <update id="updatePasswordById">
-        update user set password=#{password} where id=#{id}
+        update user set password = #{password} where id = #{id}
     </update>
 
     <update id="updateHeaderUrlById">
-        update user set header_url=#{headerUrl} where id=#{id}
+        update user set header_url = #{headerUrl} where id = #{id}
     </update>
 
     <update id="updateStatusById">
-        update user set status=#{status} where id=#{id}
+        update user set status = #{status} where id = #{id}
     </update>
 
     <select id="selectUserByEmail" resultType="user">
         select <include refid="selectUser"></include>
         from user
-        where email=#{email}
+        where email = #{email}
     </select>
 </mapper>

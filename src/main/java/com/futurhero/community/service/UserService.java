@@ -47,6 +47,7 @@ public class UserService {
         User user = (User) redisTemplate.opsForValue().get(uerKey);
         if (user == null) {
             user = userDao.selectUserById(id);
+            // user不是一直存在于缓存，需要设置超时时间
             redisTemplate.opsForValue().set(uerKey, user, 1, TimeUnit.HOURS);
         }
         return user;

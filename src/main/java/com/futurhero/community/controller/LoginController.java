@@ -51,6 +51,7 @@ public class LoginController {
     }
 
     @PostMapping("/register")
+    @LogoutRequired
     public String userRegister(Model model, User user) {
         Map<String, Object> map = userService.register(user);
         if (map.get("msg") != null) {
@@ -71,6 +72,7 @@ public class LoginController {
     }
 
     @GetMapping("/kaptcha")
+    @LogoutRequired
     public void kaptcha(HttpServletResponse response) {
         String text = kaptcha.createText();
         BufferedImage image = kaptcha.createImage(text);
@@ -92,6 +94,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
+    @LogoutRequired
     public String login(Model model, User user, boolean isRemember,
                         String kaptcha, @CookieValue("kaptcha") String random,
                         HttpServletResponse response) {
