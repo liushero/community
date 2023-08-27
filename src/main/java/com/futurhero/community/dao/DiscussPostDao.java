@@ -11,4 +11,6 @@ public interface DiscussPostDao {
     List<DiscussPost> selectDiscussPost(@Param("offset") int offset, @Param("limit") int limit);
 
     int selectDiscussPostCount();
+
+    DiscussPost selectDiscussPostById(int id);
 }

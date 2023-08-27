@@ -19,4 +19,8 @@ public class DiscussPostService {
     public int findDiscussPostCount() {
         return discussPostDao.selectDiscussPostCount();
     }
+
+    public DiscussPost findDiscussPostById(int id) {
+        return discussPostDao.selectDiscussPostById(id);
+    }
 }

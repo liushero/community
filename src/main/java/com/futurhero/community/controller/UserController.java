@@ -100,4 +100,23 @@ public class UserController {
             log.error("读取头像失败: " + e.getMessage());
         }
     }
+
+    @PostMapping("/password")
+    @LoginRequired
+    public String modifyPassword(Model model, String origin, String now) {
+        User user = hostHolder.getUser();
+        String password = CommunityUtil.getMD5(origin, user.getSalt());
+        if (!password.equals(user.getPassword())) {
+            model.addAttribute("originError", "原密码不正确");
+            return "/site/setting";
+        }
+        password = CommunityUtil.getMD5(now, user.getSalt());
+        if (password.equals(user.getPassword())) {
+            model.addAttribute("nowError", "新密码不能与原密码相同");
+            return "/site/setting";
+        }
+        userService.setPasswordById(user.getId(), password);
+        // 修改密码后退出登录
+        return "redirect:/logout";
+    }
 }

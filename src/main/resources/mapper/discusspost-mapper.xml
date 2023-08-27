@@ -22,4 +22,10 @@
         from discuss_post
         where status != 2
     </select>
+
+    <select id="selectDiscussPostById" resultType="discussPost">
+        select <include refid="selectDiscussPost"></include>
+        from discuss_post
+        where id = #{id}
+    </select>
 </mapper>

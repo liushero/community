@@ -107,8 +107,6 @@ public class UserService {
     }
 
     public int setPasswordById(int id, String password) {
-        User user = userDao.selectUserById(id);
-        password = CommunityUtil.getMD5(password, user.getSalt());
         int rows = userDao.updatePasswordById(id, password);
         deleteRedisUser(id);
         return rows;
