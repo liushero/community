@@ -6,7 +6,7 @@ $(function () {
 function send_letter() {
     $("#sendModal").modal("hide");
 
-    var toName = $("#recipient-name").val();
+    var toName = $("#toName").val();
     var content = $("#message-text").val();
     $.post(
         CONTEXT_PATH + "/message/letter/send",

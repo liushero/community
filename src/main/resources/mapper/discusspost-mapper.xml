@@ -28,4 +28,23 @@
         from discuss_post
         where id = #{id}
     </select>
+
+    <update id="updateCountById">
+        update discuss_post
+        set
+        <choose>
+            <when test="count != -1">
+                comment_count = #{count}
+            </when>
+            <otherwise>
+                comment_count = comment_count + 1
+            </otherwise>
+        </choose>
+        where id = #{id}
+    </update>
+
+    <insert id="insertDiscussPost" keyProperty="id">
+        insert into discuss_post(<include refid="insertDiscussPost"></include>)
+        values(#{userId}, #{title}, #{content}, #{type}, #{status}, #{createTime}, #{commentCount}, #{score})
+    </insert>
 </mapper>

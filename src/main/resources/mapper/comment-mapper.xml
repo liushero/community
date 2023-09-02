@@ -2,15 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.futurhero.community.dao.CommentDao">
-    <sql id="selectDiscussPost">
+    <sql id="selectComment">
         id, user_id, entity_type, entity_id, target_id, content, status, create_time
     </sql>
-    <sql id="insertDiscussPost">
+    <sql id="insertComment">
         user_id, entity_type, entity_id, target_id, content, status, create_time
     </sql>
 
     <select id="selectComments" resultType="comment">
-        select <include refid="selectDiscussPost"></include>
+        select <include refid="selectComment"></include>
         from comment
         where entity_type = #{entityType}
         and entity_id = #{entityId}
@@ -26,4 +26,9 @@
         where entity_type = #{entityType}
         and entity_id = #{entityId}
     </select>
+
+    <insert id="insertComment" keyProperty="id">
+        insert into comment(<include refid="insertComment"></include>)
+        values(#{userId}, #{entityType}, #{entityId}, #{targetId}, #{content}, #{status}, #{createTime})
+    </insert>
 </mapper>

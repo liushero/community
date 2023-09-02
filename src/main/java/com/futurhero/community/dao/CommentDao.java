@@ -17,4 +17,6 @@ public interface CommentDao {
 
     int selectCommentCount(@Param("entityType") int entityType,
                            @Param("entityId") int entityId);
+
+    int insertComment(Comment comment);
 }

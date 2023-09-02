@@ -13,4 +13,8 @@ public interface DiscussPostDao {
     int selectDiscussPostCount();
 
     DiscussPost selectDiscussPostById(int id);
+
+    int updateCountById(@Param("id") int id, @Param("count") int count);
+
+    int insertDiscussPost(DiscussPost discussPost);
 }

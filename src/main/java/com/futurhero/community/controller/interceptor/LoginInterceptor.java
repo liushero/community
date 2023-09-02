@@ -2,6 +2,7 @@ package com.futurhero.community.controller.interceptor;
 
 import com.futurhero.community.bean.Ticket;
 import com.futurhero.community.bean.User;
+import com.futurhero.community.service.MessageService;
 import com.futurhero.community.service.TicketService;
 import com.futurhero.community.service.UserService;
 import com.futurhero.community.util.HostHolder;
@@ -27,6 +28,8 @@ public class LoginInterceptor implements HandlerInterceptor {
     private UserService userService;
     @Autowired
     private TicketService ticketService;
+    @Autowired
+    private MessageService messageService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -46,6 +49,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         User user = hostHolder.getUser();
         if (user != null && modelAndView != null) {
             modelAndView.addObject("loginUser", user);
+            modelAndView.addObject("messageUnread", messageService.findLetterUnread(user.getId(), null) + messageService.findNoticeUnread(user.getId(), null));
         }
     }
 
@@ -55,9 +59,11 @@ public class LoginInterceptor implements HandlerInterceptor {
     }
 
     public String getTicket(Cookie[] cookies) {
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("ticket")) {
-                return cookie.getValue();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("ticket")) {
+                    return cookie.getValue();
+                }
             }
         }
         return null;

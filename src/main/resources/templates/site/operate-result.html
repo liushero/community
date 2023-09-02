@@ -144,7 +144,7 @@
 				var seconds = $("#seconds").text();
 				$("#seconds").text(--seconds);
 				if(seconds == 0) {
-					location.href = $("#target").attr("href");
+					window.location.href = $("#target").attr("href");
 				}
 			}, 1000);
 		});

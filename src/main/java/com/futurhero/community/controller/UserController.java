@@ -2,6 +2,8 @@ package com.futurhero.community.controller;
 
 import com.futurhero.community.annotation.LoginRequired;
 import com.futurhero.community.bean.User;
+import com.futurhero.community.service.FollowService;
+import com.futurhero.community.service.LikeService;
 import com.futurhero.community.service.UserService;
 import com.futurhero.community.util.CommunityUtil;
 import com.futurhero.community.util.HostHolder;
@@ -31,6 +33,10 @@ public class UserController {
     private UserService userService;
     @Autowired
     private HostHolder hostHolder;
+    @Autowired
+    private LikeService likeService;
+    @Autowired
+    private FollowService followService;
 
     @Value("${community.path.upload}")
     private String uploadPath;
@@ -43,6 +49,18 @@ public class UserController {
     @LoginRequired
     public String getSetting() {
         return "/site/setting";
+    }
+
+    @GetMapping("/profile/{userId}")
+    @LoginRequired
+    public String getProfile(Model model, @PathVariable("userId") int userId) {
+        User user = userService.findUserById(userId);
+        model.addAttribute("user", user);
+        model.addAttribute("likeCount", likeService.findUserLikeCount(userId));
+        model.addAttribute("followeeCount", followService.getFolloweeCount(userId));
+        model.addAttribute("followerCount", followService.getFollowerCount(userId));
+        model.addAttribute("followStatus", followService.getFollowUserStatus(hostHolder.getUser().getId(), userId));
+        return "/site/profile";
     }
 
     @PostMapping("/upload")
@@ -78,7 +96,6 @@ public class UserController {
     }
 
     @GetMapping("/header/{filename}")
-    @LoginRequired
     public void getHeader(@PathVariable("filename") String fileName, HttpServletResponse response) {
         // 服务器存放路径
         fileName = uploadPath + "/" + fileName;
